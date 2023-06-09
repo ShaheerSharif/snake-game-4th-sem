@@ -1,0 +1,6 @@
+@startyaml gameUI
+
+    GameWin:
+        - GamePanel
+
+@endyaml

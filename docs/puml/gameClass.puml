@@ -1,0 +1,154 @@
+@startuml gameClassDiagram
+
+    skinparam classAttributeIconSize 0
+
+    package javax.swing {
+        class JDialog
+        class JFrame
+        class JPanel
+    }
+
+    package java.awt.event {
+        interface ActionListener
+        interface KeyListener
+    }
+
+    package gameMenu {
+        class Menu
+        Menu --> JFrame : extends
+    }
+
+    package gameWin {
+        class GameWin
+        class GamePanel
+        Menu --* GameWin : import
+        GameWin --|> GamePanel : child component
+        GamePanel --> KeyListener : implements
+        GamePanel --> ActionListener : implements
+        GamePanel --> JPanel : extends
+        GameWin --> JDialog : extends
+    }
+
+    package main {
+        class Main
+        Main --* Menu : import
+    }
+
+    class Main {
+        + {static} void main(String[])
+    }
+
+    class GamePanel {
+        - {static} final int SCREEN_WIDTH
+        - {static} final int SCREEN_HEIGHT
+        - final int unitSize
+        - final int gameUnits
+        - final int delay
+        - final int[] snakeX
+        - final int[] snakeY
+        - final String fontName
+
+        - int appleX
+        - int appleY
+
+        - int bodyParts
+        - int score
+        - int highScore
+        - char direction
+        - boolean running
+        - boolean paused
+        - Timer timer
+        - Random random
+
+        + GamePanel()
+        - void startGame()
+        - void initialState()
+        - void draw(Graphics )
+        - void showScore(Graphics )
+        - void spawnApple()
+        - void eatApple()
+        - void move()
+        - void checkCollisions()
+        - void updateHighScore()
+        - void gameOver()
+        - void togglePause()
+        - void pauseGame()
+        - void resetGame()
+        - void gotoMenu()
+        # void paintComponent(Graphics)
+        + void actionPerformed(ActionEvent )
+        + void keyPressed(KeyEvent )
+    }
+
+    class GameWin {
+        - GamePanel gamePanel
+        + GameFrame()
+    }
+
+    class Menu {
+        - {static} final int SCREEN_WIDTH
+        - {static} final int SCREEN_HEIGHT
+
+        - {static} final int SMALL = 50;
+        - {static} final int MEDIUM = 25;
+        - {static} final int LARGE = 15;
+
+        - {static} final int EASY = 200;
+        - {static} final int NORMAL = 150;
+        - {static} final int HARD = 100;
+
+        - int highScore;
+
+        - JPanel mainPanel;
+
+        - JPanel startPanel;
+        - JLabel title;
+        - JLabel instructions;
+
+        - JPanel endPanel;
+        - JButton startGameBtn;
+
+        - JPanel choicePanel;
+
+        - JPanel mapPanel;
+        - JLabel mapLabel;
+        - ButtonGroup mapGroup;
+        - JRadioButton mapSize_small;
+        - JRadioButton mapSize_medium;
+        - JRadioButton mapSize_large;
+
+        - JPanel difficultyPanel;
+        - JLabel difficultyLabel;
+        - ButtonGroup difficultyGroup;
+        - JRadioButton difficulty_easy;
+        - JRadioButton difficulty_normal;
+        - JRadioButton difficulty_hard;
+
+        + Menu()
+        - Menu(int )
+        - addChooseMap()
+        - addChooseDifficulty()
+        - addStyle()
+    }
+
+    class JFrame {
+        + JFrame()
+    }
+
+    class JDialog {
+        + JDialog()
+    }
+
+    class JPanel {
+        + JPanel()
+    }
+
+    interface ActionListener {
+        + actionPerformed(ActionEvent ) void
+    }
+
+    interface KeyListener {
+        + keyPressed(KeyEvent ) void
+    }
+
+@enduml

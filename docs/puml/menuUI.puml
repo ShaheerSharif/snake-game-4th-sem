@@ -1,0 +1,26 @@
+@startyaml menuUI
+    
+    Menu:
+        startPanel:
+            title: "Game Title"
+            instructions: "Game Instructions"
+
+        choicePanel:
+            mapPanel:
+                mapLabel: "Choose Map Size"
+                mapGroup:
+                    mapSize_small: "Small"
+                    mapSize_medium: "Medium"
+                    mapSize_large: "Large"
+
+            difficultyPanel:
+                difficultyLabel: "Choose Difficulty"
+                difficultyGroup:
+                    difficulty_easy: "Easy"
+                    difficulty_normal: "Normal"
+                    difficulty_hard: "Hard"
+
+        endPanel:
+            startBtn: "Start Game"
+
+@endyaml
