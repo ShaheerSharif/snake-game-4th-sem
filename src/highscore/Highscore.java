@@ -3,8 +3,6 @@ package highscore;
 import org.json.JSONObject;
 import org.json.JSONException;
 import java.io.*;
-// import java.nio.*;
-// import java.nio.file.Paths;
 
 public final class Highscore {
 
@@ -20,16 +18,16 @@ public final class Highscore {
      *                     high score.
      */
     public static void updateHighscore(int newHighscore) {
-        if (newHighscore > readHighScore()) {
-            writeHighScore(newHighscore);
+        if (newHighscore > readHighscore()) {
+            writeHighscoreJSON(newHighscore);
         }
     }
 
     /**
      * The function resets the high score to zero.
      */
-    public static void resetHighScore() {
-        writeHighScore(0);
+    public static void resetHighscore() {
+        writeHighscoreJSON(0);
     }
 
     /**
@@ -42,9 +40,9 @@ public final class Highscore {
      *         the file or if the high score key is not found in the file.
      * @throws JSONException
      */
-    public static int readHighScore() {
+    public static int readHighscore() {
         try {
-            return readJsonFromFile().getInt(key);
+            return readHighscoreJSON().getInt(key);
         } catch (JSONException e) {
             return -1;
         }
@@ -57,7 +55,7 @@ public final class Highscore {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    private static void createHighScoreJSON() {
+    private static void createHighscoreJSON() {
         try {
             new File(filePath).createNewFile();
         } catch (FileNotFoundException e) {
@@ -77,10 +75,10 @@ public final class Highscore {
      * @throws IOException
      * @throws JSONException
      */
-    private static void writeHighScore(int newHighscore) {
+    private static void writeHighscoreJSON(int newHighscore) {
         JSONObject jsonObject;
 
-        createHighScoreJSON();
+        createHighscoreJSON();
 
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             jsonObject = new JSONObject();
@@ -111,12 +109,12 @@ public final class Highscore {
      * @throws IOException
      * @throws JSONException
      */
-    private static JSONObject readJsonFromFile() {
+    private static JSONObject readHighscoreJSON() {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader;
         String line;
 
-        createHighScoreJSON();
+        createHighscoreJSON();
 
         try (FileReader fileReader = new FileReader(filePath)) {
             bufferedReader = new BufferedReader(fileReader);

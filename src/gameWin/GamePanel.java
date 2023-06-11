@@ -7,7 +7,6 @@ import java.util.Random;
 
 import gameMenu.Menu;
 import highscore.Highscore;
-import score.ScoreListener;
 
 class GamePanel extends JPanel implements ActionListener, KeyListener {
 
@@ -198,7 +197,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
      * @param g The Graphics object used for drawing on the screen.
      */
     private void gameOver(Graphics g) {
-        final String strHighScore = "High Score : " + Highscore.readHighScore();
+        final String strHighScore = "High Score : " + Highscore.readHighscore();
         final String strGameOver = "Game Over";
         final String strRestart = "To Restart Game Press 'r'";
         final String strMenu = "To Return To Menu Press 'm'";
@@ -207,7 +206,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         final Font largeFont = new Font(fontName, Font.BOLD, 75);
         FontMetrics metrics;
 
-        Highscore.readHighScore();
+        Highscore.readHighscore();
 
         // highscore text
         g.setColor(Color.WHITE);

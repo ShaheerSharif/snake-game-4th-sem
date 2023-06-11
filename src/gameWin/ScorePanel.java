@@ -3,8 +3,6 @@ package gameWin;
 import javax.swing.*;
 import java.awt.*;
 
-import score.ScoreListener;
-
 class ScorePanel extends JPanel implements ScoreListener {
 
     private JLabel scoreLabel;

@@ -48,7 +48,6 @@ public class Menu extends JFrame {
     private JRadioButton difficulty_hard;
 
     private JButton resetHighScoreBtn;
-    private JLabel resetHighScoreLabel;
 
     public Menu() {
         super("Snake Game");
@@ -61,7 +60,6 @@ public class Menu extends JFrame {
         startGameBtn = new JButton("Start");
         title = new JLabel("Snake Game");
         resetHighScoreBtn = new JButton("Reset HighScore");
-        resetHighScoreLabel = new JLabel();
         instructions = new JLabel("""
                 <html>
                     To Pause Press 'p' <br>
@@ -77,7 +75,6 @@ public class Menu extends JFrame {
         addChooseDifficulty();
         endPanel.add(startGameBtn);
         endPanel.add(resetHighScoreBtn);
-        endPanel.add(resetHighScoreLabel);
         mainPanel.add(startPanel);
         mainPanel.add(choicePanel);
         mainPanel.add(endPanel);
@@ -179,9 +176,7 @@ public class Menu extends JFrame {
         resetHighScoreBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (new ResetHighscoreDialog().getReset()) {
-                    resetHighScoreLabel.setText("Highscore Reset!!!");
-                }
+                new ResetHighscoreDialog();
             }
         });
     }
@@ -217,9 +212,6 @@ public class Menu extends JFrame {
         difficultyLabel.setBackground(bgColor);
         difficultyLabel.setForeground(textColor);
         difficultyLabel.setFont(mediumFont);
-        resetHighScoreLabel.setBackground(bgColor);
-        resetHighScoreLabel.setForeground(textColor);
-        resetHighScoreLabel.setFont(smallFont);
 
         // * JRadioButton styles
         mapSize_small.setBackground(bgColor);

@@ -12,7 +12,6 @@ class ResetHighscoreDialog extends JDialog {
     private JLabel prompt;
     private JButton yesBtn;
     private JButton cancelBtn;
-    private boolean reset = false;
 
     public ResetHighscoreDialog() {
         setTitle("Reset Highscore");
@@ -34,8 +33,7 @@ class ResetHighscoreDialog extends JDialog {
         addStyle();
 
         yesBtn.addActionListener(e -> {
-            Highscore.resetHighScore();
-            reset = true;
+            Highscore.resetHighscore();
             dispose();
         });
 
@@ -49,10 +47,6 @@ class ResetHighscoreDialog extends JDialog {
         setSize(400, 200);
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    public boolean getReset() {
-        return reset;
     }
 
     private void addStyle() {

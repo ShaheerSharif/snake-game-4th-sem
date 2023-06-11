@@ -2,153 +2,189 @@
 
     skinparam classAttributeIconSize 0
 
-    package javax.swing {
-        class JDialog
-        class JFrame
-        class JPanel
-    }
+    gameMenu.ResetHighScoreDialog --> javax.swing.JDialog : extends
+    gameMenu.Menu --> javax.swing.JFrame : extends
+    gameWin.GameWin --> javax.swing.JFrame : extends
+    gameWin.GamePanel --> javax.swing.JPanel : extends
+    gameWin.ScorePanel --> javax.swing.JPanel : extends
 
-    package java.awt.event {
-        interface ActionListener
-        interface KeyListener
-    }
+    gameWin.GamePanel --|> java.awt.event.KeyListener : implements
+    gameWin.ScorePanel --|> gameWin.ScoreListener : implements
 
-    package gameMenu {
-        class Menu
-        Menu --> JFrame : extends
-    }
+    gameWin.GameWin --* gameWin.ScorePanel : child-component
+    gameWin.GameWin --* gameWin.GamePanel : child-component
 
-    package gameWin {
-        class GameWin
-        class GamePanel
-        Menu --* GameWin : import
-        GameWin --|> GamePanel : child component
-        GamePanel --> KeyListener : implements
-        GamePanel --> ActionListener : implements
-        GamePanel --> JPanel : extends
-        GameWin --> JDialog : extends
-    }
+    gameMenu.Menu -left-* gameWin.GameWin : imports
+    gameWin.GamePanel --* highscore.HighScore : imports
+    gameWin.GamePanel --* gameWin.ScoreListener : imports
+    main.Main --* gameMenu.Menu : imports
 
     package main {
         class Main
-        Main --* Menu : import
     }
 
-    class Main {
-        + {static} void main(String[])
+    package gameMenu {
+        class gameMenu.Menu
+        class gameMenu.ResetHighScoreDialog
     }
 
-    class GamePanel {
-        - {static} final int SCREEN_WIDTH
-        - {static} final int SCREEN_HEIGHT
-        - final int unitSize
-        - final int gameUnits
-        - final int delay
-        - final int[] snakeX
-        - final int[] snakeY
-        - final String fontName
+    package gameWin {
+        class gameWin.GameWin
+        class gameWin.GamePanel
+        class gameWin.ScorePanel
+        interface gameWin.ScoreListener
 
-        - int appleX
-        - int appleY
-
-        - int bodyParts
-        - int score
-        - int highScore
-        - char direction
-        - boolean running
-        - boolean paused
-        - Timer timer
-        - Random random
-
-        + GamePanel()
-        - void startGame()
-        - void initialState()
-        - void draw(Graphics )
-        - void showScore(Graphics )
-        - void spawnApple()
-        - void eatApple()
-        - void move()
-        - void checkCollisions()
-        - void updateHighScore()
-        - void gameOver()
-        - void togglePause()
-        - void pauseGame()
-        - void resetGame()
-        - void gotoMenu()
-        # void paintComponent(Graphics)
-        + void actionPerformed(ActionEvent )
-        + void keyPressed(KeyEvent )
     }
 
-    class GameWin {
-        - GamePanel gamePanel
-        + GameFrame()
+    package highscore {
+        class highscore.HighScore
     }
 
-    class Menu {
-        - {static} final int SCREEN_WIDTH
-        - {static} final int SCREEN_HEIGHT
-
-        - {static} final int SMALL = 50;
-        - {static} final int MEDIUM = 25;
-        - {static} final int LARGE = 15;
-
-        - {static} final int EASY = 200;
-        - {static} final int NORMAL = 150;
-        - {static} final int HARD = 100;
-
-        - int highScore;
-
-        - JPanel mainPanel;
-
-        - JPanel startPanel;
-        - JLabel title;
-        - JLabel instructions;
-
-        - JPanel endPanel;
-        - JButton startGameBtn;
-
-        - JPanel choicePanel;
-
-        - JPanel mapPanel;
-        - JLabel mapLabel;
-        - ButtonGroup mapGroup;
-        - JRadioButton mapSize_small;
-        - JRadioButton mapSize_medium;
-        - JRadioButton mapSize_large;
-
-        - JPanel difficultyPanel;
-        - JLabel difficultyLabel;
-        - ButtonGroup difficultyGroup;
-        - JRadioButton difficulty_easy;
-        - JRadioButton difficulty_normal;
-        - JRadioButton difficulty_hard;
-
-        + Menu()
-        - Menu(int )
-        - addChooseMap()
-        - addChooseDifficulty()
-        - addStyle()
+    package javax.swing {
+        class javax.swing.JFrame
+        class javax.swing.JDialog
+        class javax.swing.JPanel
     }
 
-    class JFrame {
-        + JFrame()
+    package java.awt.event {
+        interface java.awt.event.KeyListener
     }
 
-    class JDialog {
-        + JDialog()
+    class main.Main {
+        +void main(String[])
     }
 
-    class JPanel {
-        + JPanel()
+    class gameMenu.Menu {
+        -final int {static} SCREEN_WIDTH
+        -final int {static} SCREEN_HEIGHT
+        
+        -final int {static} SMALL
+        -final int {static} MEDIUM
+        -final int {static} LARGE
+        
+        -final int {static} EASY
+        -final int {static} NORMAL
+        -final int {static} HARD
+
+        -JPanel mainPanel
+        -JPanel startPanel
+        -JPanel choicePanel
+        -JPanel mapPanel
+        -JPanel difficultyPanel
+        -JPanel endPanel
+
+        -ButtonGroup mapGroup
+        -ButtonGroup difficultyGroup
+
+        -JRadioButton mapSize_small
+        -JRadioButton mapSize_medium
+        -JRadioButton mapSize_large
+
+        -JRadioButton difficulty_easy
+        -JRadioButton difficulty_normal
+        -JRadioButton difficulty_hard
+
+        -JLabel title
+        -JLabel instructions
+        -JLabel mapLabel
+        -JLabel difficultyLabel
+
+        -JButton resetHighScoreBtn
+
+        +Menu()
+        +void addChooseMap()
+        +void addChooseDifficulty()
+        +void addBtnFunctionality()
+        +void addStyle()
     }
 
-    interface ActionListener {
-        + actionPerformed(ActionEvent ) void
+    class gameMenu.ResetHighScoreDialog {
+        -JPanel mainPanel
+        -JPanel btnPanel
+        -JLabel prompt
+        -JButton yesBtn
+        -JButton cancelBtn
+
+        +ResetHighScoreDialog()
+        +void addStyle()
     }
 
-    interface KeyListener {
-        + keyPressed(KeyEvent ) void
+    class gameWin.GamePanel {
+        -final int {static} SCREEN_WIDTH
+        -final int {static} SCREEN_HEIGHT
+
+        -final int unitSize
+        -final int gameUnits
+        -final int delay
+        -final int[] snakeX
+        -final int[] snakeY
+        -final String fontName
+
+        -int appleX
+        -int appleY
+        
+        -int bodyParts
+        -int score
+        -char direction
+        -boolean running
+        -boolean paused
+        -Timer timer
+        -Random random
+        -ScoreListener scoreListener
+
+        +GamePanel(int unitSize, int delay, ScoreListener scoreListener)
+        -void startGame()
+        -void initialState()
+        -void updateScore()
+        -void spawnApple()
+        -void eatApple()
+        -void move()
+        -void checkCollisions()
+        -void togglePause()
+        -void pauseGame()
+        -void resetGame()
+        -void gotoMenu()
+        -void draw(Graphics g)
+        -void gameOver(Graphics g)
+        #void paintComponent(Graphics g)
+        +void actionPerformed()
+        +void keyPressed(KeyEvent e)
+        +void keyTyped(KeyEvent e)
+        +void keyReleased(KeyEvent e)
+    }
+
+    class gameWin.ScorePanel {
+        -JLabel scoreLabel
+        
+        +ScorePanel()
+        +void updateScore(int score)
+        #void addStyle()
+    }
+
+    class gameWin.GameWin {
+        -JPanel mainPanel
+        -ScorePanel scorePanel
+        -GamePanel gamePanel
+
+        +GameWin()
+        +void addStyle()
+    }
+
+    class highscore.HighScore {
+        -final {static} String filePath
+        -final {static} String key
+
+        +{static} void updateHighscore(int newHighscore)
+        +{static} void resetHighscore()
+        +{static} void readHighscore()
+        
+        -{static} void createHighscoreJSON()
+        -{static} void readHighscoreJSON()
+        -{static} void writeHighscoreJSON(int newHighscore)
+    }
+
+    interface gameWin.ScoreListener {
+        +void updateScore(int newHighscore)
     }
 
 @enduml
