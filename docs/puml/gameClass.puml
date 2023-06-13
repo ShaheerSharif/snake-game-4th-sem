@@ -9,13 +9,13 @@
     gameWin.ScorePanel --> javax.swing.JPanel : extends
 
     gameWin.GamePanel --|> java.awt.event.KeyListener : implements
+    gameWin.GamePanel --|> java.awt.event.ActionListener : implements
     gameWin.ScorePanel --|> gameWin.ScoreListener : implements
 
     gameWin.GameWin --* gameWin.ScorePanel : child-component
     gameWin.GameWin --* gameWin.GamePanel : child-component
 
     gameMenu.Menu -left-* gameWin.GameWin : imports
-    gameWin.GamePanel --* highscore.HighScore : imports
     gameWin.GamePanel --* gameWin.ScoreListener : imports
     main.Main --* gameMenu.Menu : imports
 
@@ -44,6 +44,7 @@
 
     package java.awt.event {
         interface java.awt.event.KeyListener
+        interface java.awt.event.ActionListener
     }
 
     class main.Main {
