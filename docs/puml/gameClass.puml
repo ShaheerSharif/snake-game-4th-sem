@@ -88,26 +88,16 @@
         -JButton resetHighScoreBtn
 
         +Menu()
+        +Menu(int initialHighscore)
         +void addChooseMap()
         +void addChooseDifficulty()
         +void addBtnFunctionality()
         +void addStyle()
     }
 
-    class gameMenu.ResetHighScoreDialog {
-        -JPanel mainPanel
-        -JPanel btnPanel
-        -JLabel prompt
-        -JButton yesBtn
-        -JButton cancelBtn
-
-        +ResetHighScoreDialog()
-        +void addStyle()
-    }
-
     class gameWin.GamePanel {
-        -final int {static} SCREEN_WIDTH
-        -final int {static} SCREEN_HEIGHT
+        +final int {static} SCREEN_WIDTH
+        +final int {static} SCREEN_HEIGHT
 
         -final int unitSize
         -final int gameUnits
@@ -121,6 +111,7 @@
         
         -int bodyParts
         -int score
+        -int highscore
         -char direction
         -boolean running
         -boolean paused
@@ -128,7 +119,7 @@
         -Random random
         -ScoreListener scoreListener
 
-        +GamePanel(int unitSize, int delay, ScoreListener scoreListener)
+        +GamePanel(int , int , int , ScoreListener )
         -void startGame()
         -void initialState()
         -void updateScore()
@@ -141,20 +132,20 @@
         -void pauseGame()
         -void resetGame()
         -void gotoMenu()
-        -void draw(Graphics g)
-        -void gameOver(Graphics g)
-        #void paintComponent(Graphics g)
+        -void draw(Graphics )
+        -void gameOver(Graphics )
+        #void paintComponent(Graphics )
         +void actionPerformed()
-        +void keyPressed(KeyEvent e)
-        +void keyTyped(KeyEvent e)
-        +void keyReleased(KeyEvent e)
+        +void keyPressed(KeyEvent )
+        +void keyTyped(KeyEvent )
+        +void keyReleased(KeyEvent )
     }
 
     class gameWin.ScorePanel {
         -JLabel scoreLabel
         
         +ScorePanel()
-        +void updateScore(int score)
+        +void updateScore(int )
         #void addStyle()
     }
 
@@ -168,7 +159,7 @@
     }
 
     interface gameWin.ScoreListener {
-        +void updateScore(int newHighscore)
+        +void updateScore(int )
     }
 
 @enduml

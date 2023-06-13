@@ -47,10 +47,18 @@ public class Menu extends JFrame {
     private JRadioButton difficulty_normal;
     private JRadioButton difficulty_hard;
 
+    private int initialHighscore;
+
+    public Menu(int initialHighscore) {
+        this();
+        this.initialHighscore = initialHighscore;
+    }
+
     public Menu() {
         super("Snake Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        initialHighscore = 0;
         mainPanel = new JPanel();
         startPanel = new JPanel();
         endPanel = new JPanel();
@@ -157,7 +165,7 @@ public class Menu extends JFrame {
                 }
 
                 dispose();
-                new GameWin(size, speed);
+                new GameWin(size, speed, initialHighscore);
             }
         });
     }

@@ -10,11 +10,11 @@ public class GameWin extends JFrame {
     private GamePanel gamePanel;
     private ScorePanel scorePanel;
 
-    public GameWin(int unitSize, int delay) {
+    public GameWin(int unitSize, int delay, int initialHighscore) {
         setTitle("Snake Game");
         scorePanel = new ScorePanel();
         mainPanel = new JPanel();
-        gamePanel = new GamePanel(unitSize, delay, scorePanel);
+        gamePanel = new GamePanel(unitSize, delay, initialHighscore, scorePanel);
 
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 

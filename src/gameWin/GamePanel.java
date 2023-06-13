@@ -22,7 +22,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int appleX;
     private int appleY;
 
-    private int bodyParts = 6;
+    private int bodyParts = 3;
     private int score = 0;
     private int highscore = 0;
     private char direction;
@@ -34,7 +34,20 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     // * This will listen to the current score
     private ScoreListener scoreListener;
 
-    public GamePanel(int unitSize, int delay, ScoreListener scoreListener) {
+    public GamePanel(int unitSize, int delay, int initialHighscore, ScoreListener scoreListener) {
+
+        try {
+            if (unitSize <= 0 || delay <= 0) {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Unit-size and/or delay can't be less than or equal to 0");
+            e.printStackTrace();
+            System.exit(0);
+        }
+
+        highscore = initialHighscore;
+
         this.unitSize = unitSize;
         this.delay = delay;
         this.scoreListener = scoreListener;
@@ -118,7 +131,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         try {
             scoreListener.updateScore(score);
         } catch (NullPointerException e) {
-            System.out.println("");
+            System.out.println("No score listener applied");
         }
     }
 
@@ -190,10 +203,14 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
      */
     private void checkCollisions() {
         // * check if head collides with body
-        for (int i = bodyParts; i > 0; i--) {
-            if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]) {
-                running = false;
+        try {
+            for (int i = bodyParts; i > 0; i--) {
+                if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]) {
+                    running = false;
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         // * checks if head touches the borders of the panel
@@ -275,7 +292,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     private void resetGame() {
         score = 0;
         scoreListener.updateScore(score);
-        bodyParts = 6;
+        bodyParts = 3;
     }
 
     /**
@@ -288,7 +305,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         // * If a parent window does exist then close it and open menu
         if (parentWindow != null) {
             parentWindow.dispose();
-            new Menu();
+            new Menu(highscore);
         }
     }
 
