@@ -47,8 +47,6 @@ public class Menu extends JFrame {
     private JRadioButton difficulty_normal;
     private JRadioButton difficulty_hard;
 
-    private JButton resetHighScoreBtn;
-
     public Menu() {
         super("Snake Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -59,7 +57,6 @@ public class Menu extends JFrame {
         choicePanel = new JPanel();
         startGameBtn = new JButton("Start");
         title = new JLabel("Snake Game");
-        resetHighScoreBtn = new JButton("Reset HighScore");
         instructions = new JLabel("""
                 <html>
                     To Pause Press 'p' <br>
@@ -74,18 +71,9 @@ public class Menu extends JFrame {
         addChooseMap();
         addChooseDifficulty();
         endPanel.add(startGameBtn);
-        endPanel.add(resetHighScoreBtn);
         mainPanel.add(startPanel);
         mainPanel.add(choicePanel);
         mainPanel.add(endPanel);
-
-        startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.Y_AXIS));
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        choicePanel.setLayout(new BoxLayout(choicePanel, BoxLayout.X_AXIS));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        instructions.setHorizontalAlignment(SwingConstants.CENTER);
-        choicePanel.setAlignmentX(CENTER_ALIGNMENT);
-        endPanel.setLayout(new BoxLayout(endPanel, BoxLayout.Y_AXIS));
 
         addBtnFunctionality();
         addStyle();
@@ -172,13 +160,6 @@ public class Menu extends JFrame {
                 new GameWin(size, speed);
             }
         });
-
-        resetHighScoreBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ResetHighscoreDialog();
-            }
-        });
     }
 
     private void addStyle() {
@@ -237,17 +218,17 @@ public class Menu extends JFrame {
         startGameBtn.setBackground(bgColor);
         startGameBtn.setForeground(textColor);
         startGameBtn.setFont(smallFont);
-        resetHighScoreBtn.setBackground(bgColor);
-        resetHighScoreBtn.setForeground(textColor);
-        resetHighScoreBtn.setFont(smallFont);
 
-        // * JPanel dimensions
-        // startPanel.setBounds(0, 0, 50, 50);
-        // choicePanel.setBounds(0, 0, 100, 100);
+        // * JPanel layout
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.Y_AXIS));
+        choicePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 10));
 
-        // * JPanel positioning
-        startPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        mapPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 210));
-        difficultyPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        mapPanel.setLayout(new BoxLayout(mapPanel, BoxLayout.Y_AXIS));
+        difficultyPanel.setLayout(new BoxLayout(difficultyPanel, BoxLayout.Y_AXIS));
+        endPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 10));
+
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        instructions.setHorizontalAlignment(SwingConstants.LEFT);
     }
 }

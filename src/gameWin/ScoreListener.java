@@ -1,5 +1,5 @@
 package gameWin;
 
-public interface ScoreListener {
+interface ScoreListener {
     void updateScore(int score);
 }

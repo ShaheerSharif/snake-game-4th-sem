@@ -23,6 +23,5 @@
 
             endPanel:
                 startBtn: "Start Game"
-                resetHighScoreBtn: "Reset Highscore"
 
 @endyaml

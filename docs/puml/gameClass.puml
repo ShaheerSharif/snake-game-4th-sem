@@ -36,10 +36,6 @@
 
     }
 
-    package highscore {
-        class highscore.HighScore
-    }
-
     package javax.swing {
         class javax.swing.JFrame
         class javax.swing.JDialog
@@ -136,6 +132,7 @@
         -void startGame()
         -void initialState()
         -void updateScore()
+        -void updateHighscore()
         -void spawnApple()
         -void eatApple()
         -void move()
@@ -168,19 +165,6 @@
 
         +GameWin()
         +void addStyle()
-    }
-
-    class highscore.HighScore {
-        -final {static} String filePath
-        -final {static} String key
-
-        +{static} void updateHighscore(int newHighscore)
-        +{static} void resetHighscore()
-        +{static} void readHighscore()
-        
-        -{static} void createHighscoreJSON()
-        -{static} void readHighscoreJSON()
-        -{static} void writeHighscoreJSON(int newHighscore)
     }
 
     interface gameWin.ScoreListener {

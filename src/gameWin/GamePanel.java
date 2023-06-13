@@ -6,12 +6,11 @@ import java.awt.event.*;
 import java.util.Random;
 
 import gameMenu.Menu;
-import highscore.Highscore;
 
 class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     public static final int SCREEN_WIDTH = 600;
-    public static final int SCREEN_HEIGHT = 600;
+    public static final int SCREEN_HEIGHT = 400;
 
     private final int unitSize;
     private final int gameUnits;
@@ -25,6 +24,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private int bodyParts = 6;
     private int score = 0;
+    private int highscore = 0;
     private char direction;
     private boolean running = false;
     private boolean paused = false;
@@ -105,12 +105,30 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.fillOval(appleX, appleY, unitSize, unitSize);
     }
 
+    /**
+     * This function updates the score and calls a listener to update the score
+     * display.
+     * 
+     * @throws NullPointerException throws this exception if the scoreListener is
+     *                              null
+     */
     private void updateScore() {
         score++;
 
-        if (scoreListener != null) {
+        try {
             scoreListener.updateScore(score);
+        } catch (NullPointerException e) {
+            System.out.println("");
         }
+    }
+
+    /**
+     * This function updates the highscore variable with the current score if the
+     * current score is
+     * greater than the previous highscore.
+     */
+    private void updateHighscore() {
+        highscore = (score > highscore) ? score : highscore;
     }
 
     /**
@@ -132,7 +150,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         if (snakeX[0] == appleX && snakeY[0] == appleY) {
             bodyParts++;
             updateScore();
-            Highscore.updateHighscore(score);
+            updateHighscore();
             spawnApple();
         }
     }
@@ -197,7 +215,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
      * @param g The Graphics object used for drawing on the screen.
      */
     private void gameOver(Graphics g) {
-        final String strHighScore = "High Score : " + Highscore.readHighscore();
+        final String strHighScore = "High Score : " + highscore;
         final String strGameOver = "Game Over";
         final String strRestart = "To Restart Game Press 'r'";
         final String strMenu = "To Return To Menu Press 'm'";
@@ -205,8 +223,6 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         final Font mediumFont = new Font(fontName, Font.PLAIN, 40);
         final Font largeFont = new Font(fontName, Font.BOLD, 75);
         FontMetrics metrics;
-
-        Highscore.readHighscore();
 
         // highscore text
         g.setColor(Color.WHITE);
@@ -258,6 +274,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
      */
     private void resetGame() {
         score = 0;
+        scoreListener.updateScore(score);
         bodyParts = 6;
     }
 
