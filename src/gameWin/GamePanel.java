@@ -4,9 +4,64 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.lang.Exception;
 
 import gameMenu.Menu;
 
+class IllegalUnitSizeException extends Exception {
+    private int unitSize;
+
+    public IllegalUnitSizeException(int unitSize) {
+        this.unitSize = unitSize;
+    }
+
+    @Override
+    public String getMessage() {
+        return String.format("""
+                The current unit-size is : %d
+                which is less than or equal to 0
+                """, unitSize);
+    }
+}
+
+class IllegalDelayException extends Exception {
+    private int delay;
+
+    public IllegalDelayException(int delay) {
+        this.delay = delay;
+    }
+
+    @Override
+    public String getMessage() {
+        return String.format("""
+                The current delay is : %d
+                which is less than or equal to 0
+                """, delay);
+    }
+}
+
+class NoScoreListenerException extends Exception {
+    private ScoreListener scoreListener;
+
+    public NoScoreListenerException(ScoreListener scoreListener) {
+        this.scoreListener = scoreListener;
+    }
+
+    @Override
+    public String getMessage() {
+        return String.format("""
+                The current ScoreListener is %s
+                """, (scoreListener == null) ? "null" : "not null");
+    }
+}
+
+/**
+ * The GamePanel class is a JPanel that represents the game screen, including
+ * the snake, apple, and
+ * score, and handles user input for controlling the snake's movement, pausing
+ * and resetting the game,
+ * and returning to the main menu.
+ */
 class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     public static final int SCREEN_WIDTH = 600;
@@ -37,12 +92,17 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     public GamePanel(int unitSize, int delay, int initialHighscore, ScoreListener scoreListener) {
 
         try {
-            if (unitSize <= 0 || delay <= 0) {
-                throw new IllegalArgumentException();
+            if (unitSize <= 0) {
+                throw new IllegalUnitSizeException(unitSize);
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Unit-size and/or delay can't be less than or equal to 0");
-            e.printStackTrace();
+            if (delay <= 0) {
+                throw new IllegalDelayException(delay);
+            }
+        } catch (IllegalUnitSizeException e) {
+            e.getMessage();
+            System.exit(0);
+        } catch (IllegalDelayException e) {
+            e.getMessage();
             System.exit(0);
         }
 
@@ -122,17 +182,19 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
      * This function updates the score and calls a listener to update the score
      * display.
      * 
-     * @throws NullPointerException throws this exception if the scoreListener is
-     *                              null
+     * @throws NoScoreListenerException throws this exception if the scoreListener
+     *                                  is null.
      */
     private void updateScore() {
-        score++;
-
         try {
-            scoreListener.updateScore(score);
-        } catch (NullPointerException e) {
-            System.out.println("No score listener applied");
+            if (scoreListener == null) {
+                throw new NoScoreListenerException(scoreListener);
+            }
+        } catch (NoScoreListenerException e) {
+            e.getMessage();
         }
+
+        scoreListener.updateScore(++score);
     }
 
     /**

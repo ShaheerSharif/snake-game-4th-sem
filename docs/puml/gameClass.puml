@@ -2,6 +2,10 @@
 
     skinparam classAttributeIconSize 0
 
+    gameWin.IllegalUnitSizeException --> java.lang.Exception : extends
+    gameWin.IllegalDelayException --> java.lang.Exception : extends
+    gameWin.NoScoreListenerException --> java.lang.Exception : extends
+
     gameMenu.Menu --> javax.swing.JFrame : extends
     gameWin.GameWin --> javax.swing.JFrame : extends
     gameWin.GamePanel --> javax.swing.JPanel : extends
@@ -27,6 +31,9 @@
     }
 
     package gameWin {
+        class gameWin.IllegalUnitSizeException
+        class gameWin.IllegalDelayException
+        class gameWin.NoScoreListenerException
         class gameWin.GameWin
         class gameWin.GamePanel
         class gameWin.ScorePanel
@@ -43,6 +50,10 @@
     package java.awt.event {
         interface java.awt.event.KeyListener
         interface java.awt.event.ActionListener
+    }
+
+    package java.lang {
+        class Exception
     }
 
     class main.Main {
