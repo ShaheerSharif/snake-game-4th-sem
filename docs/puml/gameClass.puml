@@ -2,7 +2,6 @@
 
     skinparam classAttributeIconSize 0
 
-    gameMenu.ResetHighScoreDialog --> javax.swing.JDialog : extends
     gameMenu.Menu --> javax.swing.JFrame : extends
     gameWin.GameWin --> javax.swing.JFrame : extends
     gameWin.GamePanel --> javax.swing.JPanel : extends
@@ -25,7 +24,6 @@
 
     package gameMenu {
         class gameMenu.Menu
-        class gameMenu.ResetHighScoreDialog
     }
 
     package gameWin {
